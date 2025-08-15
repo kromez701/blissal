@@ -16039,8 +16039,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </script>
 
+
+
 <script>
-// Bundle Variant Handler with Price Updates and Redirects - Fixed Syntax
+// Bundle Variant Handler with Price Updates and Redirects - Fixed Constant Prices
 (function() {
   'use strict';
 
@@ -16081,10 +16083,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Initialize when DOM is ready
   function init() {
-    updateBundlePrices();
+    updateBundlePrices(); // Set prices once at initialization
     setupVariantListeners();
     setupColorVariantListeners();
-    // updateMainPriceDisplay();
     
     // Delay setupAddToCartHandler to ensure it runs after other scripts
     setTimeout(function() {
@@ -16093,59 +16094,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 100);
   }
 
-  // Update all bundle prices to GBP
+  // Update all bundle prices to GBP - this now only sets the bundle bar prices
   function updateBundlePrices() {
     Object.keys(config.prices).forEach(function(variantId) {
       const priceElement = document.querySelector('[data-deal-bar-id="' + variantId + '"] .kaching-bundles__bar-price');
       if (priceElement) {
         priceElement.textContent = config.prices[variantId];
-      }
-    });
-  }
-
-  // Update main price display based on selected variant
-  function updateMainPriceDisplay() {
-    const selectedVariant = getSelectedVariant();
-    if (!selectedVariant) return;
-
-    const selectedPrice = config.prices[selectedVariant];
-    if (!selectedPrice) return;
-
-    // Update common price selectors
-    const priceSelectors = [
-      '.price-item--sale',
-      '.price__sale .price-item--last',
-      '.price-item',
-      '.gp-content-product-button',
-      '.product-price',
-      '.current-price',
-      '.sale-price'
-    ];
-
-    priceSelectors.forEach(function(selector) {
-      try {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(function(element) {
-          if (element && element.textContent && 
-              (element.textContent.includes('$') || element.textContent.includes('£') || element.textContent.includes('USD'))) {
-            element.textContent = selectedPrice;
-          }
-        });
-      } catch (e) {
-        // Ignore selector errors
-      }
-    });
-
-    // Also update any element that contains currency symbols
-    const allElements = document.querySelectorAll('*');
-    allElements.forEach(function(element) {
-      if (element.children.length === 0 && element.textContent) {
-        const text = element.textContent.trim();
-        if ((text.includes('$') || text.includes('£')) && 
-            (text.includes('.') || text.match(/\d/)) &&
-            text.length < 20) {
-          element.textContent = selectedPrice;
-        }
       }
     });
   }
@@ -16157,8 +16111,7 @@ document.addEventListener('DOMContentLoaded', function() {
     radioButtons.forEach(function(radio) {
       radio.addEventListener('change', function() {
         if (this.checked) {
-          // updateMainPriceDisplay();
-          updateSelectedState();
+          updateSelectedState(); // Only update visual state, not prices
         }
       });
     });
@@ -16215,7 +16168,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
-    // Set initial selection and continuous price updates
+    // Set initial selection
     setTimeout(function() {
       const checkedRadio = document.querySelector('input[name^="kaching-bundles-deal"]:checked');
       if (!checkedRadio) {
@@ -16226,16 +16179,12 @@ document.addEventListener('DOMContentLoaded', function() {
           mostPopularRadio.dispatchEvent(new Event('change', { bubbles: true }));
         }
       } else {
-        // updateMainPriceDisplay();
+        updateSelectedState(); // Only update visual state
       }
     }, 100);
 
-    // Force price updates more frequently
-    setInterval(function() {
-      if (getSelectedVariant()) {
-        // updateMainPriceDisplay();
-      }
-    }, 2000);
+    // Remove the continuous price update interval - prices should remain constant
+    // setInterval removed to prevent price changes
   }
 
   // Setup listeners for color variant selections
@@ -16566,13 +16515,12 @@ document.addEventListener('DOMContentLoaded', function() {
     getSelectedVariant: getSelectedVariant,
     getSelectedColorVariants: getSelectedColorVariants,
     getRedirectUrl: getRedirectUrl,
-    // updateMainPriceDisplay: updateMainPriceDisplay,
     updateBundlePrices: updateBundlePrices
   };
 
 })();
-
-
 </script>
+
+
 
 </html>
