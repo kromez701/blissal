@@ -16098,6 +16098,10 @@ document.addEventListener('DOMContentLoaded', function() {
   function updateBundlePrices() {
     Object.keys(config.prices).forEach(function(variantId) {
       const priceElement = document.querySelector('[data-deal-bar-id="' + variantId + '"] .kaching-bundles__bar-price');
+      const fullPriceElement = document.querySelector('[data-deal-bar-id="' + variantId + '"] .kaching-bundles__bar-full-price');
+      if (fullPriceElement) {
+        fullPriceElement.style.display = 'none'; // Hide full price
+      }
       if (priceElement) {
         priceElement.textContent = config.prices[variantId];
       }
