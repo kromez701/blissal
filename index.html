@@ -16102,7 +16102,12 @@ document.addEventListener('DOMContentLoaded', function() {
         priceElement.textContent = config.prices[variantId];
       }
     });
+    console.log('Bundle prices updated to constant values.');
   }
+
+  setInterval(() => {
+    updateBundlePrices(); // Ensure prices remain constant
+  }, 200); // Check every second, but prices won't change
 
   // Setup listeners for main variant selection
   function setupVariantListeners() {
