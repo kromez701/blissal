@@ -16084,7 +16084,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateBundlePrices();
     setupVariantListeners();
     setupColorVariantListeners();
-    updateMainPriceDisplay();
+    // updateMainPriceDisplay();
     
     // Delay setupAddToCartHandler to ensure it runs after other scripts
     setTimeout(function() {
@@ -16157,7 +16157,7 @@ document.addEventListener('DOMContentLoaded', function() {
     radioButtons.forEach(function(radio) {
       radio.addEventListener('change', function() {
         if (this.checked) {
-          updateMainPriceDisplay();
+          // updateMainPriceDisplay();
           updateSelectedState();
         }
       });
@@ -16226,14 +16226,14 @@ document.addEventListener('DOMContentLoaded', function() {
           mostPopularRadio.dispatchEvent(new Event('change', { bubbles: true }));
         }
       } else {
-        updateMainPriceDisplay();
+        // updateMainPriceDisplay();
       }
     }, 100);
 
     // Force price updates more frequently
     setInterval(function() {
       if (getSelectedVariant()) {
-        updateMainPriceDisplay();
+        // updateMainPriceDisplay();
       }
     }, 2000);
   }
@@ -16566,7 +16566,7 @@ document.addEventListener('DOMContentLoaded', function() {
     getSelectedVariant: getSelectedVariant,
     getSelectedColorVariants: getSelectedColorVariants,
     getRedirectUrl: getRedirectUrl,
-    updateMainPriceDisplay: updateMainPriceDisplay,
+    // updateMainPriceDisplay: updateMainPriceDisplay,
     updateBundlePrices: updateBundlePrices
   };
 
